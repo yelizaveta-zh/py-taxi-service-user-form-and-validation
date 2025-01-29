@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
+from django import forms
+from django.core.exceptions import ValidationError
+import re
 
 
 class Manufacturer(models.Model):
@@ -28,6 +31,19 @@ class Driver(AbstractUser):
         return reverse("taxi:driver-detail", kwargs={"pk": self.pk})
 
 
+def validate_license(value):
+    if not re.match(r'^[A-Z]{3}\d{5}$', value):
+        raise ValidationError("License must be in format: 3 uppercase letters followed by 5 digits.")
+
+
+class DriverLicenseUpdateForm(forms.ModelForm):
+    license_number = forms.CharField(validators=[validate_license])
+
+    class Meta:
+        model = Driver
+        fields = ["license_number"]
+
+
 class Car(models.Model):
     model = models.CharField(max_length=255)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
@@ -35,3 +51,15 @@ class Car(models.Model):
 
     def __str__(self):
         return self.model
+
+
+class CarForm(forms.ModelForm):
+    drivers = forms.ModelMultipleChoiceField(
+        queryset=Driver.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
+    class Meta:
+        model = Car
+        fields = ["model", "manufacturer", "drivers"]
