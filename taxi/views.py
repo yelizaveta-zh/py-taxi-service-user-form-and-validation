@@ -109,7 +109,10 @@ class DriverUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "form.html"
 
     def get_success_url(self):
-        return reverse_lazy("taxi:driver-detail", kwargs={"pk": self.object.pk})
+        return reverse_lazy(
+            "taxi:driver-detail",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 @login_required

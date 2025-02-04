@@ -33,7 +33,8 @@ class Driver(AbstractUser):
 def validate_license(value):
     if not re.match(r"^[A-Z]{3}\d{5}$", value):
         raise ValidationError(
-            "License must be in format:" "3 uppercase letters followed by 5 digits."
+            "License must be in format:"
+            "3 uppercase letters followed by 5 digits."
         )
 
 
