@@ -1,11 +1,15 @@
 from django import forms
+from django.contrib.auth import get_user_model
 
-from .models import Car, Driver, validate_license
+from taxi.models import Car, validate_license
+
+
+User = get_user_model()
 
 
 class CarForm(forms.ModelForm):
     drivers = forms.ModelMultipleChoiceField(
-        queryset=Driver.objects.all(),
+        queryset=User.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False,
     )
@@ -19,5 +23,5 @@ class DriverLicenseUpdateForm(forms.ModelForm):
     license_number = forms.CharField(validators=[validate_license])
 
     class Meta:
-        model = Driver
+        model = User
         fields = ["license_number"]
