@@ -25,7 +25,10 @@ ENV_PATH = os.path.join(BASE_DIR, ".env")
 # SECURITY WARNING: keep the secret key used in production secret!
 load_dotenv(ENV_PATH)
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv(
+    "SECRET_KEY",
+    default="django-insecure-8ovil3xu6=eaoqd#-#&ricv159p0pypoh5_lgm*)-fedfrwe1r"
+)
 
 if not SECRET_KEY:
     raise ValueError("SECRET_KEY is not set in environment variables")
