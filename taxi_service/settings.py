@@ -27,7 +27,7 @@ load_dotenv(ENV_PATH)
 
 SECRET_KEY = os.getenv(
     "SECRET_KEY",
-    default="django-insecure-8ovil3xu6=eaoqd#-#&ricv159p0pypoh5_lgm*)-fedfrwe1r"
+    default="django-insecure-8ovil3xu6=eaoqd#-#&ricv159p0pypoh5_lgm*)-fedfrw"
 )
 
 if not SECRET_KEY:
